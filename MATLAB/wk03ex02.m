@@ -1,0 +1,27 @@
+clear all;
+close all;
+clc;
+
+file = uigetfile('*.bmp');
+L = imread(file);
+T = input('Enter T Value: ')
+B = L>=T;
+BW = im2bw(L, 0.5);% level must be between 0 and 255
+figure;
+subplot(1,3,1); % 1 row, 2 columns, number 1 of 3 positions
+imagesc(L);colormap gray;axis image;title('Image A');
+subplot(1,3,2); % 1 row, 2 columns, number 2 of 3 positions
+imagesc(B);colormap gray;axis image;title('Image B');
+subplot(1,3,3); % 1 row, 2 columns, number 2 of 3 positions
+imagesc(BW);colormap gray;axis image;title('Image C');
+
+L = uint8([12,8,8,12;5,8,0,5;15,8,0,5;12,8,8,12]);
+
+H_count = imhist(L); %hist count
+figure;
+bar([0:255], H_count, 'r');
+xlabel('Luminance', 'FontSize', 14);
+ylabel('Count','FontSize',14);
+xlim([0 255]);ylim([0 max(H_count)]);
+
+histogram(L,'Normalization','probability')
